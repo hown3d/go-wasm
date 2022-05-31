@@ -86,9 +86,9 @@ function deleteKindCluster {
 }
 
 function cleanup {
-  killall krustlet-wasi
-  deleteKindCluster
-  rm -rf 
+  killall krustlet-wasi || true
+  deleteKindCluster || true
+  rm -rf $HOME/.krustlet
 }
 
 trap cleanup EXIT

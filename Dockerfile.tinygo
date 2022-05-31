@@ -1,0 +1,9 @@
+FROM tinygo/tinygo:0.23.0  as builder
+COPY go.mod /src/
+COPY tinygo/*.go /src/
+WORKDIR /src
+RUN tinygo build -o /src/main.wasm -target=wasi ./main.go 
+
+FROM scratch
+COPY --from=builder /src/main.wasm .
+CMD ["./main.wasm"]
